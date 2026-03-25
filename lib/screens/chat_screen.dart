@@ -7,14 +7,14 @@ import 'package:record/record.dart';
 
 void main() => runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: ChatScreen()));
 
-// --- 10 大題庫：內容高度完整，文法校正版 ---
+// --- 夥伴精校版 10 大題庫資料 ---
 final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
   '🏨 住宿': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。ご予約[よやく]の お名前[なまえ]を お願[ねが]いします。', 'chinese': '歡迎光臨。請告訴我您預約的姓名。'},
-    {'role': 'B', 'japanese': '曾[そら]です。今日[きょう]から 三泊[さんぱく]で 予約[よやく]しました。', 'chinese': '我姓曾。我預約了從今天起住三晚。'},
+    {'role': 'B', 'japanese': '曾[そう]です。今日[きょう]から 三泊[さんぱく]で 予約[よやく]しました。', 'chinese': '我姓曾。我預約了從今天起住三晚。'},
     {'role': 'A', 'japanese': 'はい、確認[かくにん]いたしました。パスポート[ぱすぽーと]を 拝見[はいけん]します。', 'chinese': '好的，已經確認好了。請讓我看一下您的護照。'},
     {'role': 'B', 'japanese': 'はい、どうぞ。Wi-Fi[わいふぁい]の パスワード[ぱすわーど]は どこに ありますか。', 'chinese': '好的，請。請問 Wi-Fi 密碼在哪裡呢？'},
-    {'role': 'A', 'japanese': 'お部屋[へや]の カードキー[かーどきー]に 書[か]いて あります。ごゆっくり どうぞ。', 'chinese': '寫在房間的房卡上。請慢用。'},
+    {'role': 'A', 'japanese': 'お部屋[おへや]の カードキー[かーどきー]に 書[か]いて あります。ごゆっくり どうぞ。', 'chinese': '寫在房間的房卡上。請慢用。'},
   ]}],
   '📍 問路': [{'lines': [
     {'role': 'A', 'japanese': 'こんにちは。何[なに]か お困[こま]りですか。', 'chinese': '妳好。有什麼困難嗎？'},
@@ -27,7 +27,7 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': 'どうしましたか。どこが 痛[いた]いですか。', 'chinese': '怎麼了呢？哪裡不舒服呢？'},
     {'role': 'B', 'japanese': '昨日[きのう]から 熱[ねつ]が あって、喉[のど]も 痛[いた]いです。', 'chinese': '從昨天開始發燒，喉嚨也很痛。'},
     {'role': 'A', 'japanese': 'そうですか。検査[けんさ]を しましょう。', 'chinese': '這樣啊。我們來做一下檢查吧。'},
-    {'role': 'B', 'japanese': 'はい、お願[ねが]いします。強[つよ]い 薬[くすり]は 飲[の]みたくないです。', 'chinese': '好的，拜託了。我不想吃太強的藥。'},
+    {'role': 'B', 'japanese': 'はい、お願[ね加]いします。強[つよ]い 藥[くすり]は 飲[の]みたくないです。', 'chinese': '好的，拜託了。我不想吃太強的藥。'},
     {'role': 'A', 'japanese': 'わかりました。弱[よわ]い 薬[くすり]を 出[だ]しますね。お大事[だいじ]に。', 'chinese': '明白了。我開比較溫和的藥給你。請保重。'},
   ]}],
   '⚡ 電器': [{'lines': [
@@ -47,7 +47,7 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
   '💳 結帳': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。お会計[かいけい]、お願[ねが]いします。', 'chinese': '歡迎光臨。麻煩結帳。'},
     {'role': 'B', 'japanese': 'はい。カード[かーど]で 払[はら]っても いいですか。', 'chinese': '好的。可以用信用卡付錢嗎？'},
-    {'role': 'A', 'japanese': 'はい、使[つか]えますよ。レシート[れしーと]は 必要[ひつよう]ですか。', 'chinese': '是的，可以使用喔。需要收據嗎？'},
+    {'role': 'A', 'japanese': 'はい、使[つか]えますよ。レシート[れしーート]は 必要[ひつよう]ですか。', 'chinese': '是的，可以使用喔。需要收據嗎？'},
     {'role': 'B', 'japanese': 'はい、お願[ねが]いします。袋[ふくろ]も 一[ひと]つ ください。', 'chinese': '是的，拜託了。也請給我一個袋子。'},
     {'role': 'A', 'japanese': '全部[ぜんぶ]で 四千五百円[よんせんごひゃくえん]です。', 'chinese': '總共是 4,500 日圓。'},
   ]}],
@@ -55,7 +55,7 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': 'いらっしゃいませ。ご注文[ちゅうもん]は お決[き]まりですか。', 'chinese': '歡迎光臨。請問決定好餐點了嗎？'},
     {'role': 'B', 'japanese': 'はい。ラーメン[らーめん] 二[ふた]つと 餃子[ぎょうざ]を お願[ねが]いします。', 'chinese': '是的。麻煩給我兩份拉麵和一份餃子。'},
     {'role': 'A', 'japanese': 'かしこまりました。お飲み物[のみもの]は いかがですか。', 'chinese': '我知道了。請問需要飲料嗎？'},
-    {'role': 'B', 'japanese': 'いいえ、結構[けっこう]です。お水[みず]を ください。', 'chinese': '不用了，謝謝。請給我白開水。'},
+    {'role': 'B', 'japanese': 'いいえ、結構[けっこう]です。お水[おみず]を ください。', 'chinese': '不用了，謝謝。請給我白開水。'},
   ]}],
   '✈️ 機場': [{'lines': [
     {'role': 'A', 'japanese': '次[つぎ]の 方[かた]、どうぞ。入国[にゅうこく]の 目的[もくてき]は 何[なん]ですか。', 'chinese': '下一位請。入境目的是什麼？'},
@@ -68,12 +68,12 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': '曾[そら]さん、昨日[きのう]の 宿題[しゅくだい]を 出[だ]して ください。', 'chinese': '曾先生，請交昨天的作業。'},
     {'role': 'B', 'japanese': '先生[せんせい]、すみません。家[いえ]に 忘[わす]れて しまいました。', 'chinese': '老師，對不起。我不小心忘在家裡了。'},
     {'role': 'A', 'japanese': '困[こま]りましたね。今日[きょう]の 午後[ごご] 持[も]って 来[き]て ください。', 'chinese': '這下麻煩了呢。請今天下午帶過來。'},
-    {'role': 'B', 'japanese': 'はい、わかりました。休み時間[やすみじかん]に 取[と]りに 帰り[かえり]ます。', 'chinese': '是的，我明白了。我休息時間回去拿。'},
+    {'role': 'B', 'japanese': 'はい、わかりました。休み時間[やすみじかん]に 取[と]りに 帰り[かえ]ります。', 'chinese': '是的，我明白了。我休息時間回去拿。'},
   ]}],
   '🏠 居家': [{'lines': [
     {'role': 'A', 'japanese': 'お帰りなさい。今日[きょう]は 仕事[しごと]が 大変[たいへん]でしたか。', 'chinese': '你回來了。今天工作很辛苦嗎？'},
-    {'role': 'B', 'japanese': 'ただいま。お腹[なか]が ぺこぺこです。晩[ばん]ご飯[ごはん]は 何[なに]ですか。', 'chinese': '我回來了。肚子好餓喔。晚餐是什麼？'},
-    {'role': 'A', 'japanese': '今日[きょう]は カレー[かれー]ですよ。もう すぐ 出來[でき]ます。', 'chinese': '今天吃咖哩喔。馬上就好了。'},
+    {'role': 'B', 'japanese': 'ただいま。お腹[おなか]が ぺこぺこです。晩[ばん]ご飯[ごはん]は 何[なに]ですか。', 'chinese': '我回來了。肚子好餓喔。晚餐是什麼？'},
+    {'role': 'A', 'japanese': '今日[きょう]は カレー[かれー]ですよ。もう すぐ 出来[でき]ます。', 'chinese': '今天吃咖哩喔。馬上就好了。'},
     {'role': 'B', 'japanese': 'やった！いい 匂[にお]いが しますね。', 'chinese': '太棒了！聞起來好香。'},
   ]}],
 };
@@ -235,11 +235,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 強化對齊：Wrap 內加入 CrossAxisAlignment.start
                       Wrap(
-                        runSpacing: 12, 
-                        spacing: 4, 
-                        crossAxisAlignment: WrapCrossAlignment.start,
+                        runSpacing: 12, // 增加行距，讓換行更清晰
+                        spacing: 2, 
+                        crossAxisAlignment: WrapCrossAlignment.end, // 確保所有字體底邊對齊
                         children: _buildCustomRuby(line.japanese)
                       ),
                       const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider(height: 1, color: Colors.black12)),
@@ -264,37 +263,41 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  // --- 關鍵對齊修正：使用 IntrinsicWidth 鎖定寬度 ---
+  // --- 解決對齊的核心邏輯 ---
   List<Widget> _buildCustomRuby(String text) {
+    // 正則表達式：捕捉 漢字[注音]、普通字符、或空格
     final RegExp reg = RegExp(r'([^\[\]\s]+)\[([^\[\]]+)\]|(\S+)|(\s+)');
     List<Widget> widgets = [];
     for (var m in reg.allMatches(text)) {
       if (m.group(1) != null) {
-        widgets.add(
-          IntrinsicWidth( // 鎖定容器寬度為子組件中最大者（漢字或假名）
-            child: Column(
-              mainAxisSize: MainAxisSize.min, 
-              children: [
-                Text(m.group(2)!, style: const TextStyle(fontSize: 10, color: Colors.blueGrey, height: 1)),
-                Text(m.group(1)!, style: const TextStyle(fontSize: 19, height: 1.2, fontWeight: FontWeight.w400)),
-              ]
-            ),
-          )
-        );
-      } else if (m.group(3) != null) {
+        // [有注音]
         widgets.add(
           IntrinsicWidth(
             child: Column(
               mainAxisSize: MainAxisSize.min, 
               children: [
-                const Text('', style: TextStyle(fontSize: 10, height: 1)),
-                Text(m.group(3)!, style: const TextStyle(fontSize: 19, height: 1.2)),
+                Text(m.group(2)!, style: const TextStyle(fontSize: 10, color: Colors.blueGrey, height: 1.0)),
+                Text(m.group(1)!, style: const TextStyle(fontSize: 18, height: 1.2, fontWeight: FontWeight.w400)),
+              ]
+            ),
+          )
+        );
+      } else if (m.group(3) != null) {
+        // [無注音]
+        widgets.add(
+          IntrinsicWidth(
+            child: Column(
+              mainAxisSize: MainAxisSize.min, 
+              children: [
+                const Text('', style: TextStyle(fontSize: 10, height: 1.0)), // 關鍵：加入空佔位確保高度統一
+                Text(m.group(3)!, style: const TextStyle(fontSize: 18, height: 1.2)),
               ]
             ),
           )
         );
       } else if (m.group(4) != null) {
-        widgets.add(const Text(' ', style: TextStyle(fontSize: 19)));
+        // 空格處理
+        widgets.add(const Text(' ', style: TextStyle(fontSize: 18)));
       }
     }
     return widgets;
@@ -312,5 +315,5 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() { _tts.stop(); _rec.dispose(); _play.dispose(); super.dispose(); }
 }
 
-class _DialogueBlock { final String id; final String? category; final List<_DialogueLine> lines; _DialogueBlock({required this.id, this.category, required this.lines}); }
+class _DialogueBlock { final String id; final String category; final List<_DialogueLine> lines; _DialogueBlock({required this.id, required this.category, required this.lines}); }
 class _DialogueLine { final String role; final String japanese; final String chinese; _DialogueLine({required this.role, required this.japanese, required this.chinese}); }
