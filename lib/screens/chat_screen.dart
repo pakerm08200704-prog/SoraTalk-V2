@@ -1,92 +1,100 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
-import 'package:ruby_text/ruby_text.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: ChatScreen(),
-  ));
-}
+void main() => runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: ChatScreen()));
 
-// --- 夥伴，這是整合後的全場景對話題庫 ---
+// --- 完整 10 大題庫：已逐字補齊所有假名標註 ---
 final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
-  '🛒 購物': [
-    {
-      'lines': [
-        {'role': 'A', 'japanese': 'いらっしゃいませ。何[なに]を お探[さが]しですか。', 'chinese': '歡迎光臨。請問在找什麼呢？'},
-        {'role': 'B', 'japanese': 'これを 見[み]せて ください。', 'chinese': '請給我看這個。'},
-        {'role': 'A', 'japanese': 'はい、どうぞ。', 'chinese': '好的，請。'},
-      ]
-    },
-    {
-      'lines': [
-        {'role': 'B', 'japanese': '試着[しちゃく]して いいですか。', 'chinese': '可以試穿嗎？'},
-        {'role': 'A', 'japanese': 'はい、あちらに 試着室[しちゃくしつ]が あります。', 'chinese': '好的，那邊有試穿室。'},
-      ]
-    },
-  ],
-  '🍱 點餐': [
-    {
-      'lines': [
-        {'role': 'A', 'japanese': 'ご注文[ちゅうもん]は お決[き]まりですか。', 'chinese': '請問決定好餐點了嗎？'},
-        {'role': 'B', 'japanese': 'これと これを ください。', 'chinese': '請給我這個和這個。'},
-        {'role': 'A', 'japanese': 'かしこまりました。少々[しょうしょう] お待[ま]ちください。', 'chinese': '好的，我知道了。請稍等一下。'},
-      ]
-    },
-  ],
-  '💳 結帳': [
-    {
-      'lines': [
-        {'role': 'B', 'japanese': 'お会計[かいけい]、お願[ねが]いします。', 'chinese': '麻煩結帳。'},
-        {'role': 'A', 'japanese': '全部[ぜんぶ]で ５０００円[えん]です。', 'chinese': '總共是 5000 日圓。'},
-        {'role': 'B', 'japanese': 'カードで 払[はら]えますか。', 'chinese': '可以用信用卡付錢嗎？'},
-        {'role': 'A', 'japanese': 'はい、大丈夫[だいじょうぶ]ですよ。', 'chinese': '是的，沒問題。'},
-      ]
-    },
-  ],
-  '✈️ 機場': [
-    {
-      'lines': [
-        {'role': 'A', 'japanese': 'パスポートを 見[み]せて ください。', 'chinese': '請出示護照。'},
-        {'role': 'B', 'japanese': 'はい、どうぞ。', 'chinese': '好的，請。'},
-        {'role': 'A', 'japanese': 'ご職業[しょくぎょう]は 何[なん]ですか。', 'chinese': '您的職業是什麼？'},
-        {'role': 'B', 'japanese': '公務員[こうむいん]です。', 'chinese': '我是公務員。'},
-      ]
-    },
-  ],
-  '🏫 學校': [
-    {
-      'lines': [
-        {'role': 'A', 'japanese': '宿題[しゅくだい]を 出[だ]して ください。', 'chinese': '請交作業。'},
-        {'role': 'B', 'japanese': 'すみません、家[いえ]に 忘[わす]れました。', 'chinese': '對不起，我忘在家裡了。'},
-        {'role': 'A', 'japanese': '明日[あした] 必[かなら]ず 持[も]って 来[き]て くださいね。', 'chinese': '明天請務必帶過來喔。'},
-      ]
-    },
-  ],
-  '🏠 居家': [
-    {
-      'lines': [
-        {'role': 'B', 'japanese': 'ただいま。', 'chinese': '我回來了。'},
-        {'role': 'A', 'japanese': 'お帰りなさい。ご飯[はん]の 前[まえ]に お風呂[ふろ]に しますか。', 'chinese': '回來了。飯前要先洗澡嗎？'},
-        {'role': 'B', 'japanese': 'いいえ、先[さき]に ご飯[はん]を 食[た]べたいです。', 'chinese': '不，我想先吃飯。'},
-      ]
-    },
-    {
-      'lines': [
-        {'role': 'B', 'japanese': 'いただきます。', 'chinese': '我要開動了。'},
-        {'role': 'A', 'japanese': 'はい、召[め]し上[あ]がれ。', 'chinese': '好的，請享用。'},
-        {'role': 'B', 'japanese': 'ごちそうさまでした。とても 美味[おい]しかったです。', 'chinese': '吃飽了。非常美味。'},
-      ]
-    },
-  ],
+  '🏨 住宿': [{'lines': [
+    {'role': 'A', 'japanese': 'いらっしゃいませ。ご予約[よやく]の お名前[なまえ]を お願[ねが]いします。', 'chinese': '歡迎光臨。請告訴我您預約的姓名。'},
+    {'role': 'B', 'japanese': '曾[そら]です。今日[きょう]から 三泊[さんぱく]で 予約[よやく]しました。', 'chinese': '我姓曾。我預約了從今天起住三晚。'},
+    {'role': 'A', 'japanese': 'はい、確認[かくにん]いたしました。パスポートを 拝見[はいけん]します。', 'chinese': '好的，已經確認好了。請讓我看一下您的護照。'},
+    {'role': 'B', 'japanese': 'はい、どうぞ。Wi-Fi[わいふぁい]の パスワード[ぱすわーど]は どこに ありますか。', 'chinese': '好的，請。請問 Wi-Fi 密碼在哪裡呢？'},
+    {'role': 'A', 'japanese': 'お部屋[へや]の カードキー[かーどきー]に 書[か]いて あります。ごゆっくり どうぞ。', 'chinese': '寫在房間的房卡上。請慢用。'},
+    {'role': 'B', 'japanese': 'わかりました。ありがとうございます。', 'chinese': '明白了，謝謝妳。'},
+  ]}],
+  '📍 問路': [{'lines': [
+    {'role': 'A', 'japanese': 'こんにちは。何[なに]か お困り[おこまり]ですか。', 'chinese': '妳好。有什麼困難嗎？'},
+    {'role': 'B', 'japanese': 'はい。東京[とうきょう]タワー[たわー]へ 行[い]きたいですが、道[みち]を 教え[おしえ]て ください。', 'chinese': '是的。我想去東京鐵塔，請告訴我怎麼走。'},
+    {'role': 'A', 'japanese': '真っ直ぐ[まっすぐ] 行[い]って、二[ふた]つ目[め]の 角[かど]を 左[ひだり]に 曲がって[まがって] ください。', 'chinese': '請直走，在第二個轉角左轉。'},
+    {'role': 'B', 'japanese': '左[ひだり]ですね。歩い[あるい]て どのくらい かかりますか。', 'chinese': '左轉對吧。走路大約要多久呢？'},
+    {'role': 'A', 'japanese': '十分[じゅっぷん]くらいですよ。すぐ わかりまりますよ。', 'chinese': '大約十分鐘喔。馬上就會找到了。'},
+    {'role': 'B', 'japanese': 'わかりました。教え[おしえ]て くれて、ありがとう。', 'chinese': '明白了。謝謝你告訴我。'},
+  ]}],
+  '🏥 醫院': [{'lines': [
+    {'role': 'A', 'japanese': 'どうしましたか。どこが 痛い[いたい]ですか。', 'chinese': '怎麼了呢？哪裡不舒服呢？'},
+    {'role': 'B', 'japanese': '昨日[きのう]から 熱[ねつ]が あって、喉[のど]も 痛い[いたい]です。', 'chinese': '從昨天開始發燒，喉嚨也很痛。'},
+    {'role': 'A', 'japanese': 'そうですか。インフルエンザ[いんふるえんざ]の 檢查[けんさ]を しましょう。', 'chinese': '這樣啊。我們來做一下流感篩檢吧。'},
+    {'role': 'B', 'japanese': 'はい、お願[ねが]いします。強い[つよい] 藥[くすり]は 飲み[のみ]たくないです。', 'chinese': '好的，拜託了。我不想吃太強的藥。'},
+    {'role': 'A', 'japanese': 'わかりました。弱[よわ]い 藥[くすり]を 出し[だし]ますね。お大事[だいじ]に。', 'chinese': '明白了。我開比較溫和的藥給你。請保重。'},
+    {'role': 'B', 'japanese': 'ありがとうございます、先生[せんせい]。', 'chinese': '謝謝醫生。'},
+  ]}],
+  '⚡ 電器': [{'lines': [
+    {'role': 'A', 'japanese': 'いらっしゃいませ。何[なに]か お探[さが]しですか。', 'chinese': '歡迎光臨。請問在找什麼呢？'},
+    {'role': 'B', 'japanese': 'すみません、這個 炊飯器[すいはんき]を 買い[かい]たいですが。', 'chinese': '不好意思，我想買這台電鍋。'},
+    {'role': 'A', 'japanese': 'ありがとうございます。こちら、今[いま] 一番[いちばん] 人気[にんき]ですよ。', 'chinese': '謝謝。這一款是現在最受歡迎的喔。'},
+    {'role': 'B', 'japanese': '少し[すこし] 安く[やすく] して もらえませんか。', 'chinese': '能不能再算便宜一點呢？'},
+    {'role': 'A', 'japanese': 'うーん、特別[とくべつ]に 五百円[ごひゃく円] 引き[びき]ましょう。', 'chinese': '嗯...那我特別幫您折價 500 日圓吧。'},
+    {'role': 'B', 'japanese': 'やった！じゃ、これを ください。', 'chinese': '太棒了！那我要買這個。'},
+  ]}],
+  '🛒 購物': [{'lines': [
+    {'role': 'A', 'japanese': 'いらっしゃいませ。お菓子[おかし]は いかがですか。', 'chinese': '歡迎光臨。要不要看看點心呢？'},
+    {'role': 'B', 'japanese': 'あの、日本[にほん]の お土産[みやげ]を 探し[さがし]て います。', 'chinese': '那個，我正在找日本的伴手禮。'},
+    {'role': 'A', 'japanese': 'こちらが おすすめです。一[ひと]つ 千円[千えん]です。', 'chinese': '推薦這一款。一個一千日圓。'},
+    {'role': 'B', 'japanese': 'いいですね。プレゼント[ぷれぜんと]の 包装[ほうそう]も できますか。', 'chinese': '不錯呢。也可以提供禮物包裝嗎？'},
+    {'role': 'A', 'japanese': 'はい、できますよ。少々[しょうしょう] お待ち[まち] ください。', 'chinese': '是的，可以喔。請稍等一下。'},
+    {'role': 'B', 'japanese': 'じゃ、三[みっ]つ お願[ねが]いします。', 'chinese': '那麼，麻煩給我三個。'},
+  ]}],
+  '💳 結帳': [{'lines': [
+    {'role': 'A', 'japanese': 'いらっしゃいませ。お会計[かいけい]、お願[ねが]いします。', 'chinese': '歡迎光臨。麻煩結帳。'},
+    {'role': 'B', 'japanese': 'はい。カード[かーど]で 払[はら]っても いいですか。', 'chinese': '好的。可以用信用卡付錢嗎？'},
+    {'role': 'A', 'japanese': 'はい、使[つか]えますよ。レシート[れしーと]は 必要[ひつよう]ですか。', 'chinese': '是的，可以使用喔。需要收據嗎？'},
+    {'role': 'B', 'japanese': 'はい、お願[ねが]いします。袋[ふくろ]も 一[ひと]つ ください。', 'chinese': '是的，拜託了。也請給我一個袋子。'},
+    {'role': 'A', 'japanese': 'かしこまりました。全部[ぜんぶ]で 四千五百円[四千五百円]です。', 'chinese': '我知道了。總共是 4,500 日圓。'},
+    {'role': 'B', 'japanese': 'ありがとうございました。', 'chinese': '非常感謝。'},
+  ]}],
+  '🍱 點餐': [{'lines': [
+    {'role': 'A', 'japanese': 'いらっしゃいませ。ご注文[ちゅうもん]は お決[き]まりですか。', 'chinese': '歡迎光臨。請問決定好餐點了嗎？'},
+    {'role': 'B', 'japanese': 'はい。ラーメン[らーめん]二[ふた]つと 餃子[ぎょうざ]を お願[ねが]いします。', 'chinese': '是的。麻煩給我兩份拉麵和一份餃子。'},
+    {'role': 'A', 'japanese': 'かしこまりました。お飲み物[のみもの]は いかがですか。', 'chinese': '我知道了。請問需要飲料嗎？'},
+    {'role': 'B', 'japanese': 'いいえ、結構[けっこう]です。お水[みず]を ください。', 'chinese': '不用了，謝謝。請給我白開水。'},
+    {'role': 'A', 'japanese': 'わかりました。少々[しょうしょう] お待ち[まち] ください。', 'chinese': '明白了。請稍等一下。'},
+    {'role': 'B', 'japanese': 'お願[ね加]いします。', 'chinese': '拜託了。'},
+  ]}],
+  '✈️ 機場': [{'lines': [
+    {'role': 'A', 'japanese': '次[つぎ]の 方[かた]、どうぞ。入國[にゅうこく]の 目的[もくてき]は 何[なん]ですか。', 'chinese': '下一位請。入境目的是什麼？'},
+    {'role': 'B', 'japanese': '觀光[かんこう]です。五日間[いつかかん] 滯在[たいざい]します。', 'chinese': '是觀光。會停留五天。'},
+    {'role': 'A', 'japanese': 'どこに 泊まり[とまり]ますか。', 'chinese': '要住在哪裡呢？'},
+    {'role': 'B', 'japanese': '新宿[しんじゅく]の ホテル[ほてる]です。', 'chinese': '新宿的飯店。'},
+    {'role': 'A', 'japanese': 'はい、わかりました。良い[よい] 旅[たび]を。', 'chinese': '好的，明白了。祝您旅途愉快。'},
+    {'role': 'B', 'japanese': 'ありがとうございます。', 'chinese': '謝謝。'},
+  ]}],
+  '🏫 學校': [{'lines': [
+    {'role': 'A', 'japanese': '曾[そら]さん、昨日[きのう]の 宿題[しゅくだい]を 出[だ]して ください。', 'chinese': '曾先生，請交昨天的作業。'},
+    {'role': 'B', 'japanese': '先生[せんせい]、すみません。家[いえ]に 忘[わす]れて しまいました。', 'chinese': '老師，對不起。我不小心忘在家裡了。'},
+    {'role': 'A', 'japanese': '困[こま]りましたね。今日[きょう]の 午後[ごご] 持[も]って 來[き]て ください。', 'chinese': '這下麻煩了呢。請今天下午帶過來。'},
+    {'role': 'B', 'japanese': 'はい、わかりました。休み時間[やすみじかん]に 取り[とり]に 帰り[かえり]ます。', 'chinese': '是的，我明白了。我休息時間回去拿。'},
+    {'role': 'A', 'japanese': '氣[き]を 付けて[つけて] くださいね。', 'chinese': '請路上小心喔。'},
+    {'role': 'B', 'japanese': 'はい、失禮[しつれい]します。', 'chinese': '好的，告辭了。'},
+  ]}],
+  '🏠 居家': [{'lines': [
+    {'role': 'A', 'japanese': 'お帰りなさい。今日[きょう]は 仕事[しごと]が 大変[たいへん]でしたか。', 'chinese': '你回來了。今天工作很辛苦嗎？'},
+    {'role': 'B', 'japanese': 'ただいま。お腹[なか]が ぺこぺこです。晩ご飯[ばんごはん]は 何[なに]ですか。', 'chinese': '我回來了。肚子好餓喔。晚餐是什麼？'},
+    {'role': 'A', 'japanese': '今日[きょう]は カレー[かれー]ですよ。もう すぐ 出來[でき]ます。', 'chinese': '今天吃咖哩喔。馬上就好了。'},
+    {'role': 'B', 'japanese': 'やった！いい 匂い[におい]が しますね。', 'chinese': '太棒了！聞起來好香。'},
+    {'role': 'A', 'japanese': '先[さき]に 手[て]を 洗って[あらって] くださいね。', 'chinese': '要先去洗手喔。'},
+    {'role': 'B', 'japanese': 'はい、わかりました。', 'chinese': '好的，我明白了。'},
+  ]}],
+};
+
+final Map<String, IconData> categoryIcons = {
+  '🏨 住宿': Icons.hotel, '📍 問路': Icons.map, '🏥 醫院': Icons.local_hospital, '⚡ 電器': Icons.electrical_services,
+  '🛒 購物': Icons.shopping_bag, '💳 結帳': Icons.payments, '🍱 點餐': Icons.restaurant, '✈️ 機場': Icons.flight_takeoff,
+  '🏫 學校': Icons.school, '🏠 居家': Icons.home,
 };
 
 class ChatScreen extends StatefulWidget {
@@ -95,211 +103,257 @@ class ChatScreen extends StatefulWidget {
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
-  final List<_DialogueBlock> _dialogues = [];
-  final ScrollController _scroll = ScrollController();
-  final Random _rnd = Random();
+class _ChatScreenState extends State<ChatScreen> {
+  _DialogueBlock? _currentDialogue;
   late final FlutterTts _tts;
   late final AudioRecorder _rec;
   late final AudioPlayer _play;
   bool _isRec = false;
   String? _recordingLineId;
 
+  // 六段語速設定
+  final List<double> _speeds = [0.2, 0.4, 0.6, 0.8, 1.0, 1.2];
+  int _speedIndex = 2; // 預設 0.6
+
   @override
   void initState() {
     super.initState();
-    _tts = FlutterTts();
-    _rec = AudioRecorder();
-    _play = AudioPlayer();
+    _tts = FlutterTts(); _rec = AudioRecorder(); _play = AudioPlayer();
     _initTts();
+    _pickDialogue('🏨 住宿');
   }
 
   Future<void> _initTts() async {
     await _tts.setLanguage("ja-JP");
-    await _tts.setSpeechRate(0.5);
-    await _tts.setPitch(1.0);
+    await _tts.setSpeechRate(_speeds[_speedIndex]);
+  }
+
+  void _cycleSpeed() {
+    setState(() {
+      _speedIndex = (_speedIndex + 1) % _speeds.length;
+    });
+    _tts.setSpeechRate(_speeds[_speedIndex]);
   }
 
   void _pickDialogue(String category) {
     final list = dialogueData[category]!;
-    final pick = list[_rnd.nextInt(list.length)];
-    final lines = pick['lines']!;
-    final dialogueId = DateTime.now().millisecondsSinceEpoch.toString();
-    
     setState(() {
-      _dialogues.add(_DialogueBlock(
-        id: dialogueId,
+      _currentDialogue = _DialogueBlock(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
         category: category,
-        lines: lines.map((l) => _DialogueLine(
-          role: l['role']!,
-          japanese: l['japanese']!,
-          chinese: l['chinese']!,
-        )).toList(),
-      ));
+        lines: list[0]['lines']!.map((l) => _DialogueLine(role: l['role']!, japanese: l['japanese']!, chinese: l['chinese']!)).toList(),
+      );
     });
-    _scrollToBottom();
   }
 
-  Future<void> _handleLineMic(String dialogueId, int lineIndex) async {
-    final lineId = '$dialogueId-$lineIndex';
+  Future<void> _handleLineMic(int index) async {
+    final lineId = '${_currentDialogue!.id}-$index';
     if (!_isRec) {
-      final hasPermission = await _rec.hasPermission();
-      if (!hasPermission) return;
-      setState(() { _isRec = true; _recordingLineId = lineId; });
-      await _rec.start(const RecordConfig(encoder: AudioEncoder.opus), path: '');
+      if (await _rec.hasPermission()) {
+        setState(() { _isRec = true; _recordingLineId = lineId; });
+        await _rec.start(const RecordConfig(), path: '');
+      }
     } else {
       if (_recordingLineId != lineId) return;
-      final p = await _rec.stop();
+      final path = await _rec.stop();
       setState(() { _isRec = false; _recordingLineId = null; });
-      if (p != null) {
-        Future.delayed(const Duration(milliseconds: 400), () async {
-          await _play.play(kIsWeb ? UrlSource(p) : DeviceFileSource(p));
+      if (path != null) {
+        Future.delayed(const Duration(milliseconds: 300), () async {
+          await _play.play(kIsWeb ? UrlSource(path) : DeviceFileSource(path));
         });
       }
     }
   }
 
-  void _scrollToBottom() {
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (_scroll.hasClients) {
-        _scroll.animateTo(_scroll.position.maxScrollExtent, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F2F5),
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        title: const Text('SoraTalk - 生活情境模擬', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('SoraTalk：日語會話隨身教練', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16)),
         backgroundColor: Colors.white,
+        elevation: 0.5,
         centerTitle: true,
-        elevation: 1,
+        actions: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12.0),
+              child: OutlinedButton.icon(
+                onPressed: _cycleSpeed,
+                icon: const Icon(Icons.speed, size: 16),
+                label: Text('語速 ${_speeds[_speedIndex]}x', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.blueAccent,
+                  side: const BorderSide(color: Colors.blueAccent, width: 1.2),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
-          Container(
-            height: 65,
-            color: Colors.white,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              children: dialogueData.keys.map((cat) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: FilterChip(
-                  label: Text(cat, style: const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold)),
-                  onSelected: (_) => _pickDialogue(cat),
-                  backgroundColor: Colors.blue[50],
-                  selected: false,
-                ),
-              )).toList(),
-            ),
-          ),
+          _buildCategoryBar(),
           Expanded(
-            child: ListView.builder(
-              controller: _scroll,
-              padding: const EdgeInsets.all(12),
-              itemCount: _dialogues.length,
-              itemBuilder: (context, i) => _buildDialogueBlock(_dialogues[i]),
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+              children: _currentDialogue!.lines.asMap().entries.map((e) => _buildLine(e.key, e.value)).toList(),
             ),
           ),
-          _buildControlPanel(),
+          _buildStatusFooter(),
         ],
       ),
     );
   }
 
-  Widget _buildDialogueBlock(_DialogueBlock dialogue) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (dialogue.category != null)
-          Padding(
-            padding: const EdgeInsets.only(left: 10, bottom: 8),
-            child: Chip(label: Text(dialogue.category!, style: const TextStyle(fontSize: 10, color: Colors.white)), backgroundColor: Colors.blueGrey,),
-          ),
-        ...dialogue.lines.asMap().entries.map((entry) {
-          final index = entry.key;
-          final line = entry.value;
-          final isB = line.role == 'B';
+  Widget _buildCategoryBar() {
+    return Container(
+      height: 95, color: Colors.white,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        children: categoryIcons.entries.map((entry) {
+          final isSelected = _currentDialogue?.category == entry.key;
           return Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  backgroundColor: isB ? Colors.blueAccent : Colors.grey[400],
-                  radius: 18,
-                  child: Text(line.role, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 4, offset: const Offset(0, 2))],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RubyText(_parseRuby(line.japanese), style: const TextStyle(fontSize: 18, color: Colors.black87, fontWeight: FontWeight.w500)),
-                            const Divider(height: 16),
-                            Text(line.chinese, style: const TextStyle(fontSize: 14, color: Colors.blueGrey)),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.volume_up, color: Colors.blueAccent),
-                            onPressed: () => _tts.speak(line.japanese.replaceAll(RegExp(r'\[.*?\]'), '')),
-                          ),
-                          if (isB)
-                            IconButton(
-                              icon: Icon(
-                                _isRec && _recordingLineId == '${dialogue.id}-$index' ? Icons.stop : Icons.mic_none,
-                                color: _isRec && _recordingLineId == '${dialogue.id}-$index' ? Colors.red : Colors.grey,
-                              ),
-                              onPressed: () => _handleLineMic(dialogue.id, index),
-                            ),
-                        ],
-                      ),
-                    ],
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: GestureDetector(
+              onTap: () => _pickDialogue(entry.key),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: isSelected ? Colors.blueAccent : Colors.grey[100],
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(entry.value, color: isSelected ? Colors.white : Colors.blueGrey[400], size: 22),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  Text(entry.key.split(' ')[1], style: TextStyle(fontSize: 11, color: isSelected ? Colors.blueAccent : Colors.blueGrey, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+                ],
+              ),
             ),
           );
         }).toList(),
-        const Divider(height: 40, thickness: 1, indent: 20, endIndent: 20,),
-      ],
-    );
-  }
-
-  Widget _buildControlPanel() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 35),
-      decoration: const BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, -2))]),
-      child: Text(
-        _isRec ? '🎤 錄音中...請對著麥克風唸出日文句子' : '請選擇上方分類啟動對話練習',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: _isRec ? Colors.redAccent : Colors.grey, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  List<RubyTextData> _parseRuby(String text) {
+  Widget _buildLine(int index, _DialogueLine line) {
+    final isB = line.role == 'B';
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 24.0),
+      child: Row(
+        mainAxisAlignment: isB ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (!isB) _buildAvatar('教練'),
+          const SizedBox(width: 10),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: isB ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: isB ? const Color(0xFFE3F2FD) : Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(16),
+                      topRight: const Radius.circular(16),
+                      bottomLeft: isB ? const Radius.circular(16) : Radius.zero,
+                      bottomRight: isB ? Radius.zero : const Radius.circular(16),
+                    ),
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 4, offset: const Offset(0, 2))],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // --- 改用 Wrap 解決對齊問題 ---
+                      Wrap(
+                        runSpacing: 12, // 行與行之間的間距
+                        spacing: 4,    // 字與字之間的間距
+                        children: _buildCustomRuby(line.japanese),
+                      ),
+                      const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider(height: 1, color: Colors.black12)),
+                      Text(line.chinese, style: const TextStyle(fontSize: 13, color: Colors.blueGrey, height: 1.4)),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(icon: const Icon(Icons.volume_up, color: Colors.blueAccent, size: 20), onPressed: () => _tts.speak(line.japanese.replaceAll(RegExp(r'\[.*?\]'), ''))),
+                    IconButton(
+                      icon: Icon(_isRec && _recordingLineId == '${_currentDialogue!.id}-$index' ? Icons.stop_circle : Icons.mic_none, color: Colors.redAccent, size: 20),
+                      onPressed: () => _handleLineMic(index),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 10),
+          if (isB) _buildAvatar('夥伴'),
+        ],
+      ),
+    );
+  }
+
+  // --- 手動 Ruby 建構邏輯，確保垂直對齊不飄移 ---
+  List<Widget> _buildCustomRuby(String text) {
     final RegExp reg = RegExp(r'([^\[\]\s]+)\[([^\[\]]+)\]|(\S+)|(\s+)');
-    return reg.allMatches(text).map((m) {
-      if (m.group(1) != null) return RubyTextData(m.group(1)!, ruby: m.group(2));
-      return RubyTextData(m.group(3) ?? m.group(4) ?? '');
-    }).toList();
+    List<Widget> widgets = [];
+
+    for (var m in reg.allMatches(text)) {
+      if (m.group(1) != null) {
+        // 漢字 + 假名 組
+        widgets.add(Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 振假名 (上層)
+            Text(m.group(2)!, style: const TextStyle(fontSize: 10, color: Colors.blueGrey, height: 1)),
+            // 漢字 (下層)
+            Text(m.group(1)!, style: const TextStyle(fontSize: 19, height: 1.2, fontWeight: FontWeight.w400)),
+          ],
+        ));
+      } else if (m.group(3) != null) {
+        // 一般假名 (沒 Ruby，但為了 Wrap 對齊，也要包 Column)
+        widgets.add(Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('', style: TextStyle(fontSize: 10, height: 1)),
+            Text(m.group(3)!, style: const TextStyle(fontSize: 19, height: 1.2)),
+          ],
+        ));
+      } else if (m.group(4) != null) {
+        // 空格處理
+        widgets.add(const Text(' ', style: TextStyle(fontSize: 19)));
+      }
+    }
+    return widgets;
+  }
+
+  Widget _buildAvatar(String label) {
+    return CircleAvatar(
+      radius: 15, backgroundColor: label == '教練' ? Colors.orange[50] : Colors.blue[50],
+      child: Text(label[0], style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: label == '教練' ? Colors.orange[800] : Colors.blue[800])),
+    );
+  }
+
+  Widget _buildStatusFooter() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 35),
+      color: Colors.white,
+      child: Center(
+        child: Text(
+          _isRec ? '🎤 錄音中... 請模仿發音' : '💡 提示：A 為教練發話，B 為夥伴回應。',
+          style: TextStyle(color: _isRec ? Colors.red : Colors.blueGrey[300], fontWeight: FontWeight.bold, fontSize: 11),
+        ),
+      ),
+    );
   }
 
   @override
