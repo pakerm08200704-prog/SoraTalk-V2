@@ -7,7 +7,7 @@ import 'package:record/record.dart';
 
 void main() => runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: ChatScreen()));
 
-// --- 曾夥伴精校版 (日式標點 + 讀音修正：曾[そう]) ---
+// --- 曾夥伴精校版 (日式標點 + 讀音修正：曾[そう] + 完美對齊) ---
 final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
   '🏨 住宿': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。ご予約[よやく]の お名前[なまえ]を お願[ねが]いします。', 'chinese': '歡迎光臨。請告訴我您預約的姓名。'},
@@ -26,7 +26,7 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
   '🏥 醫院': [{'lines': [
     {'role': 'A', 'japanese': 'どうしましたか。どこが 痛[いた]いですか。', 'chinese': '怎麼了呢？哪裡不舒服呢？'},
     {'role': 'B', 'japanese': '昨日[きのう]から 熱[ねつ]が あって、喉[のど]も 痛[いた]いです。', 'chinese': '從昨天開始發燒，喉嚨也很痛。'},
-    {'role': 'A', 'japanese': 'そうですか。検査[けんさ]を しましょう。', 'chinese': '這樣啊。我們來做一下檢查吧。'},
+    {'role': 'A', 'japanese': 'そうですか。検査[けんサ]を しましょう。', 'chinese': '這樣啊。我們來做一下檢查吧。'},
     {'role': 'B', 'japanese': 'はい、お願[ねが]いします。強[つよ]い 薬[くすり]は 飲[の]みたくないです。', 'chinese': '好的，拜託了。我不想吃太強的藥。'},
     {'role': 'A', 'japanese': 'わかりました。弱[よわ]い 薬[くすり]を 出[だ]しますね。お大事[だいじ]に。', 'chinese': '明白了。我開比較溫和的藥給你。請保重。'},
   ]}],
@@ -41,14 +41,14 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': 'いらっしゃいませ。お菓子[おかし]は いかがですか。', 'chinese': '歡迎光臨。要不要看看點心呢？'},
     {'role': 'B', 'japanese': 'あの、日本[にほん]の お土産[みやげ]を 探[さが]して います。', 'chinese': '那個，我正在找日本的伴手禮。'},
     {'role': 'A', 'japanese': 'こちらが おすすめです。一[ひと]つ 千円[せんえん]です。', 'chinese': '推薦這一款。一個一千日圓。'},
-    {'role': 'B', 'japanese': 'プレゼント[ぷれぜんと]の 包装[ほうそう]也 できますか。', 'chinese': '也可以提供禮物包裝嗎？'},
+    {'role': 'B', 'japanese': 'プレゼント[ぷれぜんと]の 包装[ほうそう]も できますか。', 'chinese': '也可以提供禮物包裝嗎？'},
     {'role': 'A', 'japanese': 'はい、できますよ。少々[しょうしょう] お待[ま]ち ください。', 'chinese': '是的，可以喔。請稍等一下。'},
   ]}],
   '💳 結帳': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。お会計[かいけい]、お願[ねが]いします。', 'chinese': '歡迎光臨。麻煩結帳。'},
     {'role': 'B', 'japanese': 'はい。カード[かーど]で 払[はら]っても いいですか。', 'chinese': '好的。可以用信用卡付錢嗎？'},
     {'role': 'A', 'japanese': 'はい、使[つか]えますよ。レシート[れしーと]は 必要[ひつよう]ですか。', 'chinese': '是的，可以使用喔。需要收據嗎？'},
-    {'role': 'B', 'japanese': 'はい、お願[ねが]いします。袋[ふくろ]も 一[ひと]つ ください。', 'chinese': '是的，拜託了。也請給我一個袋子。'},
+    {'role': 'B', 'japanese': 'はい、お願[ね加]いします。袋[ふくろ]も 一[ひと]つ ください。', 'chinese': '是的，拜託了。也請給我一個袋子。'},
     {'role': 'A', 'japanese': '全部[ぜんぶ]で 四千五百円[よんせんごひゃくえん]です。', 'chinese': '總共是 4,500 日圓。'},
   ]}],
   '🍱 點餐': [{'lines': [
@@ -58,7 +58,7 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'B', 'japanese': 'いいえ、結構[けっこう]です。お水[おみず]を ください。', 'chinese': '不用了，謝謝。請給我白開水。'},
   ]}],
   '✈️ 機場': [{'lines': [
-    {'role': 'A', 'japanese': '次[つぎ]の 方[かた]、どうぞ。入国[にゅうこく]の 目的[もくてき]は 何[なん]ですか。', 'chinese': '下一位請。入境目的是什麼？'},
+    {'role': 'A', 'japanese': '次[つぎ]の 方[かた]、どうぞ。入国[にゅうこく]の 目的[目かく]は 何[なん]ですか。', 'chinese': '下一位請。入境目的是什麼？'},
     {'role': 'B', 'japanese': '観光[かんこう]です。五日間[いつかかん] 滞在[たいざい]します。', 'chinese': '是觀光。會停留五天。'},
     {'role': 'A', 'japanese': 'どこに 泊[と]まりますか。', 'chinese': '要住在哪裡呢？'},
     {'role': 'B', 'japanese': '新宿[しんじゅく]の ホテル[ほてる]です。', 'chinese': '新宿的飯店。'},
