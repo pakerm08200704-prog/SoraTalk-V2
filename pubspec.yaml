@@ -1,4 +1,4 @@
-name: SoraTalk-V2
+name: soratalk_v2
 description: "SoraTalk：夥伴的日語會話隨身教室"
 publish_to: 'none'
 version: 1.0.0+1
@@ -10,7 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  # 這是確保括號排版在 Web 上美觀的關鍵
   google_fonts: ^8.0.2
   flutter_tts: ^4.2.5
   record: ^6.2.0
