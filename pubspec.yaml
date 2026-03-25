@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  # 這是確保括號排版在 Web 上美觀的關鍵
   google_fonts: ^8.0.2
   flutter_tts: ^4.2.5
   record: ^6.2.0
