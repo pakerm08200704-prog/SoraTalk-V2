@@ -7,13 +7,13 @@ import 'package:record/record.dart';
 
 void main() => runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: ChatScreen()));
 
-// --- 曾夥伴精校版 (日式標點 + 讀音修正：曾[そう] + 完美對齊) ---
+// --- 曾夥伴優化版 (括號排版 + 讀音修正：曾[そう]) ---
 final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
   '🏨 住宿': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。ご予約[よやく]の お名前[なまえ]を お願[ねが]いします。', 'chinese': '歡迎光臨。請告訴我您預約的姓名。'},
     {'role': 'B', 'japanese': '曾[そう]です。今日[きょう]から 三泊[さんぱく]で 予約[よやく]しました。', 'chinese': '我姓曾。我預約了從今天起住三晚。'},
     {'role': 'A', 'japanese': 'はい、確認[かくにん]いたしました。パスポート[ぱすぽーと]を 拝見[はいけん]します。', 'chinese': '好的，已經確認好了。請讓我看一下您的護照。'},
-    {'role': 'B', 'japanese': 'はい、どうぞ。Wi-Fi[わいふぁい]の パスワード[ぱすわーど]は どこに ありますか。', 'chinese': '好的，請。請問 Wi-Fi 密碼在哪裡呢？'},
+    {'role': 'B', 'japanese': 'はい、どうぞ。Wi-Fi[わいふぁい]の パスワード[ぱすわーど]は 這裡[どこ]に ありますか。', 'chinese': '好的，請。請問 Wi-Fi 密碼在哪裡呢？'},
     {'role': 'A', 'japanese': 'お部屋[おへや]の カードキー[かーどきー]に 書[か]いて あります。ごゆっくり どうぞ。', 'chinese': '寫在房間的房卡上。請慢用。'},
   ]}],
   '📍 問路': [{'lines': [
@@ -26,14 +26,14 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
   '🏥 醫院': [{'lines': [
     {'role': 'A', 'japanese': 'どうしましたか。どこが 痛[いた]いですか。', 'chinese': '怎麼了呢？哪裡不舒服呢？'},
     {'role': 'B', 'japanese': '昨日[きのう]から 熱[ねつ]が あって、喉[のど]も 痛[いた]いです。', 'chinese': '從昨天開始發燒，喉嚨也很痛。'},
-    {'role': 'A', 'japanese': 'そうですか。検査[けんサ]を しましょう。', 'chinese': '這樣啊。我們來做一下檢查吧。'},
+    {'role': 'A', 'japanese': 'そうですか。検査[けんさ]を しましょう。', 'chinese': '這樣啊。我們來做一下檢查吧。'},
     {'role': 'B', 'japanese': 'はい、お願[ねが]いします。強[つよ]い 薬[くすり]は 飲[の]みたくないです。', 'chinese': '好的，拜託了。我不想吃太強的藥。'},
-    {'role': 'A', 'japanese': 'わかりました。弱[よわ]い 薬[くすり]を 出[だ]しますね。お大事[だいじ]に。', 'chinese': '明白了。我開比較溫和的藥給你。請保重。'},
+    {'role': 'A', 'japanese': 'わかりました。弱[よわ]い 藥[くすり]を 出[だ]しますね。お大事[だいじ]に。', 'chinese': '明白了。我開比較溫和的藥給你。請保重。'},
   ]}],
   '⚡ 電器': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。何[なに]か お探[さが]しですか。', 'chinese': '歡迎光臨。請問在找什麼呢？'},
-    {'role': 'B', 'japanese': 'すみません、この 炊飯器[すいはんき]を 買[か]いたいですが。', 'chinese': '不好意思，我想買這台電鍋。'},
-    {'role': 'A', 'japanese': 'ありがとうございます。こちら、今[いま] 一番[いちばん] 人気[にんき]ですよ。', 'chinese': '謝謝。這一款是現在最受歡迎的喔。'},
+    {'role': 'B', 'japanese': 'すみません、這個 炊飯器[すいはんき]を 買[か]いたいですが。', 'chinese': '不好意思，我想買這台電鍋。'},
+    {'role': 'A', 'japanese': 'ありがとうございます。こちら、今[いま] 一番[いちばん] 人気[にんき]ですよ。', 'chinese': '謝謝。這一款是現在受歡迎的喔。'},
     {'role': 'B', 'japanese': '少[すこ]し 安[やす]く して もらえませんか。', 'chinese': '能不能再算便宜一點呢？'},
     {'role': 'A', 'japanese': '特別[とくべつ]に 五百円[ごひゃくえん] 引[び]きましょう。', 'chinese': '特別幫您折價 500 日圓吧。'},
   ]}],
@@ -48,17 +48,17 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': 'いらっしゃいませ。お会計[かいけい]、お願[ねが]いします。', 'chinese': '歡迎光臨。麻煩結帳。'},
     {'role': 'B', 'japanese': 'はい。カード[かーど]で 払[はら]っても いいですか。', 'chinese': '好的。可以用信用卡付錢嗎？'},
     {'role': 'A', 'japanese': 'はい、使[つか]えますよ。レシート[れしーと]は 必要[ひつよう]ですか。', 'chinese': '是的，可以使用喔。需要收據嗎？'},
-    {'role': 'B', 'japanese': 'はい、お願[ね加]いします。袋[ふくろ]も 一[ひと]つ ください。', 'chinese': '是的，拜託了。也請給我一個袋子。'},
+    {'role': 'B', 'japanese': 'はい、お願[ねが]いします。袋[ふくろ]も 一[ひと]つ ください。', 'chinese': '是的，拜託了。也請給我一個袋子。'},
     {'role': 'A', 'japanese': '全部[ぜんぶ]で 四千五百円[よんせんごひゃくえん]です。', 'chinese': '總共是 4,500 日圓。'},
   ]}],
   '🍱 點餐': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。ご注文[ちゅうもん]は お決[き]まりですか。', 'chinese': '歡迎光臨。請問決定好餐點了嗎？'},
-    {'role': 'B', 'japanese': 'はい。ラーメン[らーめん] 二[ふた]つと 餃子[ぎょうざ]を お願[ねが]いします。', 'chinese': '是的。麻煩給我兩份拉麵和一份餃子。'},
+    {'role': 'B', 'japanese': 'はい。ラーメン[らーめん] 二[ふた]つと 餃子[ぎょうざ]を お願[ね項]いします。', 'chinese': '是的。麻煩給我兩份拉麵和一份餃子。'},
     {'role': 'A', 'japanese': 'かしこまりました。お飲み物[のみもの]は いかがですか。', 'chinese': '我知道了。請問需要飲料嗎？'},
     {'role': 'B', 'japanese': 'いいえ、結構[けっこう]です。お水[おみず]を ください。', 'chinese': '不用了，謝謝。請給我白開水。'},
   ]}],
   '✈️ 機場': [{'lines': [
-    {'role': 'A', 'japanese': '次[つぎ]の 方[かた]、どうぞ。入国[にゅうこく]の 目的[目かく]は 何[なん]ですか。', 'chinese': '下一位請。入境目的是什麼？'},
+    {'role': 'A', 'japanese': '次[つぎ]の 方[かた]、どうぞ。入国[にゅうこく]の 目的[もくてき]は 何[なん]ですか。', 'chinese': '下一位請。入境目的是什麼？'},
     {'role': 'B', 'japanese': '観光[かんこう]です。五日間[いつかかん] 滞在[たいざい]します。', 'chinese': '是觀光。會停留五天。'},
     {'role': 'A', 'japanese': 'どこに 泊[と]まりますか。', 'chinese': '要住在哪裡呢？'},
     {'role': 'B', 'japanese': '新宿[しんじゅく]の ホテル[ほてる]です。', 'chinese': '新宿的飯店。'},
@@ -71,9 +71,9 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'B', 'japanese': 'はい、わかりました。休み時間[やすみじかん]に 取[と]りに 帰り[かえ]ります。', 'chinese': '是的，我明白了。我休息時間回去拿。'},
   ]}],
   '🏠 居家': [{'lines': [
-    {'role': 'A', 'japanese': 'お帰りなさい。今日[きょう]は 仕事[しごと]が 大変[たいへん]でしたか。', 'chinese': '你回來了。今天工作很辛苦嗎？'},
+    {'role': 'A', 'japanese': 'お帰りなさい。今日[きょう]は 仕事[しごと]が 大變[たいへん]でしたか。', 'chinese': '你回來了。今天工作很辛苦嗎？'},
     {'role': 'B', 'japanese': 'ただいま。お腹[おなか]が ぺこぺこです。晩[ばん]ご飯[ごはん]は 何[なに]ですか。', 'chinese': '我回來了。肚子好餓喔。晚餐是什麼？'},
-    {'role': 'A', 'japanese': '今日[きょう]は カレー[かれー]ですよ。もう すぐ 出来[でき]ます。', 'chinese': '今天吃咖哩喔。馬上就好了。'},
+    {'role': 'A', 'japanese': '今日[きょう]は カレー[かれー]ですよ。もう すぐ 出來[でき]ます。', 'chinese': '今天吃咖哩喔。馬上就好了。'},
     {'role': 'B', 'japanese': 'やった！いい 匂[にお]いが しますね。', 'chinese': '太棒了！聞起來好香。'},
   ]}],
 };
@@ -235,12 +235,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Wrap(
-                        runSpacing: 10, 
-                        spacing: 2, 
-                        crossAxisAlignment: WrapCrossAlignment.end,
-                        children: _buildCustomRuby(line.japanese)
-                      ),
+                      _buildOptimizedRuby(line.japanese),
                       const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider(height: 1, color: Colors.black12)),
                       Text(line.chinese, style: const TextStyle(fontSize: 13, color: Colors.blueGrey, height: 1.4)),
                     ],
@@ -263,39 +258,27 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  List<Widget> _buildCustomRuby(String text) {
-    final RegExp reg = RegExp(r'([^\[\]\s]+)\[([^\[\]]+)\]|(\S+)|(\s+)');
-    List<Widget> widgets = [];
+  // --- 關鍵優化：括號排版函數 ---
+  Widget _buildOptimizedRuby(String text) {
+    final RegExp reg = RegExp(r'([^\[\]\s]+)\[([^\[\]]+)\]|([^\[\]\s]+)');
+    List<TextSpan> spans = [];
+
     for (var m in reg.allMatches(text)) {
       if (m.group(1) != null) {
-        widgets.add(
-          IntrinsicWidth(
-            child: Column(
-              mainAxisSize: MainAxisSize.min, 
-              children: [
-                Text(m.group(2)!, style: const TextStyle(fontSize: 10, color: Colors.blueGrey, height: 1.0)),
-                Text(m.group(1)!, style: const TextStyle(fontSize: 18, height: 1.2, fontWeight: FontWeight.w400)),
-              ]
-            ),
-          )
-        );
+        // 漢字部分
+        spans.add(TextSpan(text: m.group(1), style: const TextStyle(fontSize: 17, color: Colors.black87, fontWeight: FontWeight.w500)));
+        // 括號讀音部分 (縮小字體並改色)
+        spans.add(TextSpan(text: '(${m.group(2)})', style: const TextStyle(fontSize: 13, color: Colors.blueGrey, fontWeight: FontWeight.normal)));
       } else if (m.group(3) != null) {
-        widgets.add(
-          IntrinsicWidth(
-            child: Column(
-              mainAxisSize: MainAxisSize.min, 
-              children: [
-                const Text('', style: TextStyle(fontSize: 10, height: 1.0)), 
-                Text(m.group(3)!, style: const TextStyle(fontSize: 18, height: 1.2)),
-              ]
-            ),
-          )
-        );
-      } else if (m.group(4) != null) {
-        widgets.add(const Text(' ', style: TextStyle(fontSize: 18)));
+        // 一般假名或標點
+        spans.add(TextSpan(text: m.group(3), style: const TextStyle(fontSize: 17, color: Colors.black87)));
       }
     }
-    return widgets;
+
+    return RichText(
+      text: TextSpan(children: spans),
+      softWrap: true,
+    );
   }
 
   Widget _buildAvatar(String label) {
