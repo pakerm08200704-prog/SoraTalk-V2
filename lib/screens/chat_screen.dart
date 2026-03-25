@@ -7,7 +7,7 @@ import 'package:record/record.dart';
 
 void main() => runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: ChatScreen()));
 
-// --- 夥伴精校版 10 大題庫資料 ---
+// --- 曾夥伴精校版 (日式標點 + 讀音修正：曾[そう]) ---
 final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
   '🏨 住宿': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。ご予約[よやく]の お名前[なまえ]を お願[ねが]いします。', 'chinese': '歡迎光臨。請告訴我您預約的姓名。'},
@@ -20,14 +20,14 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': 'こんにちは。何[なに]か お困[こま]りですか。', 'chinese': '妳好。有什麼困難嗎？'},
     {'role': 'B', 'japanese': 'はい。東京[とうきょう]タワー[たわー]へ 行[い]きたいですが、道[みち]を 教え[おしえ]て ください。', 'chinese': '是的。我想去東京鐵塔，請告訴我怎麼走。'},
     {'role': 'A', 'japanese': '真っ直ぐ[まっすぐ] 行[い]って、二[ふた]つ目[め]の 角[かど]を 左[ひだり]に 曲[ま]がって ください。', 'chinese': '請直走，在第二個轉角左轉。'},
-    {'role': 'B', 'japanese': '左[ひだり]ですね。歩[ある]いて どのくらい かかりますか。', 'chinese': '左轉對吧。走路大約要多久呢？'},
+    {'role': 'B', 'japanese': '左[ひだり]ですね。步[ある]いて どのくらい かかりますか。', 'chinese': '左轉對吧。走路大約要多久呢？'},
     {'role': 'A', 'japanese': '十分[じゅっぷん]くらいですよ。すぐ 分[わ]かりますよ。', 'chinese': '大約十分鐘喔。馬上就會找到了。'},
   ]}],
   '🏥 醫院': [{'lines': [
     {'role': 'A', 'japanese': 'どうしましたか。どこが 痛[いた]いですか。', 'chinese': '怎麼了呢？哪裡不舒服呢？'},
     {'role': 'B', 'japanese': '昨日[きのう]から 熱[ねつ]が あって、喉[のど]も 痛[いた]いです。', 'chinese': '從昨天開始發燒，喉嚨也很痛。'},
     {'role': 'A', 'japanese': 'そうですか。検査[けんさ]を しましょう。', 'chinese': '這樣啊。我們來做一下檢查吧。'},
-    {'role': 'B', 'japanese': 'はい、お願[ね加]いします。強[つよ]い 藥[くすり]は 飲[の]みたくないです。', 'chinese': '好的，拜託了。我不想吃太強的藥。'},
+    {'role': 'B', 'japanese': 'はい、お願[ねが]いします。強[つよ]い 薬[くすり]は 飲[の]みたくないです。', 'chinese': '好的，拜託了。我不想吃太強的藥。'},
     {'role': 'A', 'japanese': 'わかりました。弱[よわ]い 薬[くすり]を 出[だ]しますね。お大事[だいじ]に。', 'chinese': '明白了。我開比較溫和的藥給你。請保重。'},
   ]}],
   '⚡ 電器': [{'lines': [
@@ -41,13 +41,13 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': 'いらっしゃいませ。お菓子[おかし]は いかがですか。', 'chinese': '歡迎光臨。要不要看看點心呢？'},
     {'role': 'B', 'japanese': 'あの、日本[にほん]の お土産[みやげ]を 探[さが]して います。', 'chinese': '那個，我正在找日本的伴手禮。'},
     {'role': 'A', 'japanese': 'こちらが おすすめです。一[ひと]つ 千円[せんえん]です。', 'chinese': '推薦這一款。一個一千日圓。'},
-    {'role': 'B', 'japanese': 'プレゼント[ぷれぜんと]の 包装[ほうそう]も できますか。', 'chinese': '也可以提供禮物包裝嗎？'},
+    {'role': 'B', 'japanese': 'プレゼント[ぷれぜんと]の 包装[ほうそう]也 できますか。', 'chinese': '也可以提供禮物包裝嗎？'},
     {'role': 'A', 'japanese': 'はい、できますよ。少々[しょうしょう] お待[ま]ち ください。', 'chinese': '是的，可以喔。請稍等一下。'},
   ]}],
   '💳 結帳': [{'lines': [
     {'role': 'A', 'japanese': 'いらっしゃいませ。お会計[かいけい]、お願[ねが]いします。', 'chinese': '歡迎光臨。麻煩結帳。'},
     {'role': 'B', 'japanese': 'はい。カード[かーど]で 払[はら]っても いいですか。', 'chinese': '好的。可以用信用卡付錢嗎？'},
-    {'role': 'A', 'japanese': 'はい、使[つか]えますよ。レシート[れしーート]は 必要[ひつよう]ですか。', 'chinese': '是的，可以使用喔。需要收據嗎？'},
+    {'role': 'A', 'japanese': 'はい、使[つか]えますよ。レシート[れしーと]は 必要[ひつよう]ですか。', 'chinese': '是的，可以使用喔。需要收據嗎？'},
     {'role': 'B', 'japanese': 'はい、お願[ねが]いします。袋[ふくろ]も 一[ひと]つ ください。', 'chinese': '是的，拜託了。也請給我一個袋子。'},
     {'role': 'A', 'japanese': '全部[ぜんぶ]で 四千五百円[よんせんごひゃくえん]です。', 'chinese': '總共是 4,500 日圓。'},
   ]}],
@@ -65,9 +65,9 @@ final Map<String, List<Map<String, List<Map<String, String>>>>> dialogueData = {
     {'role': 'A', 'japanese': 'はい、わかりました。良[よ]い 旅[たび]を。', 'chinese': '好的，明白了。祝您旅途愉快。'},
   ]}],
   '🏫 學校': [{'lines': [
-    {'role': 'A', 'japanese': '曾[そら]さん、昨日[きのう]の 宿題[しゅくだい]を 出[だ]して ください。', 'chinese': '曾先生，請交昨天的作業。'},
+    {'role': 'A', 'japanese': '曾[そう]さん、昨日[きのう]の 宿題[しゅくだい]を 出[だ]して ください。', 'chinese': '曾先生，請交昨天的作業。'},
     {'role': 'B', 'japanese': '先生[せんせい]、すみません。家[いえ]に 忘[わす]れて しまいました。', 'chinese': '老師，對不起。我不小心忘在家裡了。'},
-    {'role': 'A', 'japanese': '困[こま]りましたね。今日[きょう]の 午後[ごご] 持[も]って 来[き]て ください。', 'chinese': '這下麻煩了呢。請今天下午帶過來。'},
+    {'role': 'A', 'japanese': '困[こま]りましたね。今日[きょう]の 午後[ごご] 持[も]って 來[き]て ください。', 'chinese': '這下麻煩了呢。請今天下午帶過來。'},
     {'role': 'B', 'japanese': 'はい、わかりました。休み時間[やすみじかん]に 取[と]りに 帰り[かえ]ります。', 'chinese': '是的，我明白了。我休息時間回去拿。'},
   ]}],
   '🏠 居家': [{'lines': [
@@ -151,7 +151,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        title: const Text('SoraTalk：日語會話隨身教練', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16)),
+        title: const Text('SoraTalk：日語會話隨身教室', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16)),
         backgroundColor: Colors.white, elevation: 0.5, centerTitle: true,
         actions: [
           Center(
@@ -236,9 +236,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Wrap(
-                        runSpacing: 12, // 增加行距，讓換行更清晰
+                        runSpacing: 10, 
                         spacing: 2, 
-                        crossAxisAlignment: WrapCrossAlignment.end, // 確保所有字體底邊對齊
+                        crossAxisAlignment: WrapCrossAlignment.end,
                         children: _buildCustomRuby(line.japanese)
                       ),
                       const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider(height: 1, color: Colors.black12)),
@@ -263,14 +263,11 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  // --- 解決對齊的核心邏輯 ---
   List<Widget> _buildCustomRuby(String text) {
-    // 正則表達式：捕捉 漢字[注音]、普通字符、或空格
     final RegExp reg = RegExp(r'([^\[\]\s]+)\[([^\[\]]+)\]|(\S+)|(\s+)');
     List<Widget> widgets = [];
     for (var m in reg.allMatches(text)) {
       if (m.group(1) != null) {
-        // [有注音]
         widgets.add(
           IntrinsicWidth(
             child: Column(
@@ -283,20 +280,18 @@ class _ChatScreenState extends State<ChatScreen> {
           )
         );
       } else if (m.group(3) != null) {
-        // [無注音]
         widgets.add(
           IntrinsicWidth(
             child: Column(
               mainAxisSize: MainAxisSize.min, 
               children: [
-                const Text('', style: TextStyle(fontSize: 10, height: 1.0)), // 關鍵：加入空佔位確保高度統一
+                const Text('', style: TextStyle(fontSize: 10, height: 1.0)), 
                 Text(m.group(3)!, style: const TextStyle(fontSize: 18, height: 1.2)),
               ]
             ),
           )
         );
       } else if (m.group(4) != null) {
-        // 空格處理
         widgets.add(const Text(' ', style: TextStyle(fontSize: 18)));
       }
     }
