@@ -1,25 +1,34 @@
-name: soratalk_v2
-description: "SoraTalk：夥伴的日語會話隨身教室"
-publish_to: 'none'
-version: 1.0.0+1
+name: Deploy to GitHub Pages
 
-environment:
-  sdk: ^3.11.1
+on:
+  push:
+    branches:
+      - main
 
-dependencies:
-  flutter:
-    sdk: flutter
-  cupertino_icons: ^1.0.8
-  google_fonts: ^8.0.2
-  flutter_tts: ^4.2.5
-  record: ^6.2.0
-  audioplayers: ^6.6.0
-  path_provider: ^2.1.5
+permissions:
+  contents: write
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^6.0.0
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
 
-flutter:
-  uses-material-design: true
+      - name: ⚙️ Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🏗️ Build Web
+        # 這裡請確認你的 GitHub 倉庫名稱是 SoraTalk-V2
+        run: flutter build web --release --base-href /SoraTalk-V2/
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/web
+          branch: gh-pages
