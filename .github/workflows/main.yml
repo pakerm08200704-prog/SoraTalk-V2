@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+# 關鍵：加入權限設定，解決自動化部署失敗的問題
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -21,7 +25,7 @@ jobs:
         run: flutter pub get
 
       - name: 🏗️ Build Web
-        # 注意：這裡的 /SoraTalk-V2/ 必須跟你目前的 GitHub 專案名稱一致
+        # 確保 base-href 的大小寫與 GitHub 倉庫路徑完全一致
         run: flutter build web --release --base-href /SoraTalk-V2/
 
       - name: 🚀 Deploy to GitHub Pages
